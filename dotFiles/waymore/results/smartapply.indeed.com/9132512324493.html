@@ -1,0 +1,61 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+
+
+
+
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Indeed Apply</title>
+</head>
+<body>
+<script>
+    (function () {
+        // Urls are of the form /beta/indeedapply/form/* with short url stored as "shorturl/form"
+        var storageKey = 'shortUrl/' + window.location.pathname.replace('/beta/indeedapply/', '').split('/')[0];
+
+        var destinationUrl = sessionStorage.getItem(storageKey);
+        if (destinationUrl === null) { return; }
+
+        var anchor = document.createElement('a');
+        anchor.href = destinationUrl;
+
+        // Block relative URIs
+        if (anchor.href !== destinationUrl) { return; }
+
+        // Block cross-origin redirections
+        // anchor.origin is not available on some versions of IE11, Edge. A check for truthiness required
+        // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12236493/
+        if (anchor.origin && window.location.origin && (anchor.origin !== window.location.origin)) { return; }
+
+        // Merge query strings
+        if (anchor.search === '') {
+            anchor.search = window.location.search;
+        } else {
+            anchor.search += window.location.search.replace('?', '&');
+            // Scan multiple 'hl' parameters and only keep the last one, APPLY-4070
+            if (URLSearchParams) { // Check for IE
+                var hlKey = 'hl';
+                var params = new URLSearchParams(anchor.search);
+                var hlValues = params.getAll(hlKey);
+                if (hlValues.length > 1) {
+                    var lastHlValue = hlValues[hlValues.length - 1];
+                    params.delete(hlKey);
+                    params.append(hlKey, lastHlValue);
+                    anchor.search = '?' + params.toString();
+                }
+            }
+        }
+
+        window.location = anchor.href;
+    })();
+</script>
+</body>
+</html>
+
