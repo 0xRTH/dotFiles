@@ -2,7 +2,7 @@
 
 # Define source and destination directories
 src_dir=./dotFiles
-dst_dir=~/test/
+dst_dir=~/
 
 # Function to prompt user for confirmation
 confirm() {
