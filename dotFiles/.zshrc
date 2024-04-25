@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/user/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -99,11 +99,11 @@ source $ZSH/oh-my-zsh.sh
 
 unalias gf
 
-export PATH=$PATH:/Users/user/.nexustools
+export PATH=$PATH:$HOME/.nexustools
 export PATH="$PATH:$HOME/.axiom/interact"
 
 # bun completions
-[ -s "/Users/user/.bun/_bun" ] && source "/Users/user/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
